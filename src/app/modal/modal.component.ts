@@ -1,5 +1,6 @@
 import { Component, OnInit,Pipe, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import  {ModalServiceService } from '../shared/modal-service.service';
 
 @Component({
   selector: 'app-modal',
@@ -22,7 +23,10 @@ export class ModalComponent implements OnInit {
   @Input() visible: boolean;
   @Output() visibleChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor() { }
+  constructor(private cmodal:ModalServiceService) {
+      cmodal.closeModal.emit(false);
+      console.log("ela");
+   }
 
   ngOnInit() { }
 

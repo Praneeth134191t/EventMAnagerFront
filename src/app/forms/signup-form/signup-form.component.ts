@@ -1,5 +1,7 @@
-import { Component, OnInit,NgModule,ViewChild } from '@angular/core';
-
+import { Component, OnInit,NgModule,ViewChild,Input } from '@angular/core';
+import { AuthService } from '../../auth/auth.service';
+import { ModalComponent } from '../../modal/modal.component';
+import {ModalServiceService} from '../../shared/modal-service.service';
 
 
 class Signup {
@@ -16,16 +18,37 @@ class Signup {
 })
 export class SignupFormComponent{
 
-  constructor() { }
-
+  constructor(private authService:AuthService,private clsmodal:ModalServiceService) { }
+  user : Signup;
   model: Signup = new Signup();
   @ViewChild('signUpForm') form: any;
+  @Input() modal :ModalComponent;
+
 
   onSubmit() {
     if (this.form.valid) {
-      console.log("Form Submitted!");
+      this.authService.postSignUp(this.model)
+                           .subscribe(
+                               user => {this.user = user;
+                                 console.log(this.user);
+                                }, //Bind to view
+                                err => {
+                                    // Log errors if any
+                                    console.log(err);
+                                });
       this.form.reset();
+      this.clsmodal.closeModal.emit(false);
     }
+    
   }
+  // submitForm(){
+  //   this.dataService.postSignUp()
+  //                          .subscribe(
+  //                              user => this.user = user, //Bind to view
+  //                               err => {
+  //                                   // Log errors if any
+  //                                   console.log(err);
+  //                               });
+  // }
 
 }

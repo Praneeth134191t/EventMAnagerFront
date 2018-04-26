@@ -22,6 +22,9 @@ export class ImageViewComponent implements OnInit {
                                     this.imageService.getResult(this.word)
                        .subscribe(
                          res=>{
+                           if(res.length<10){
+                             location.reload();
+                           }
                           this.photos=res;
                          },
                          err=> {console.log(err);}

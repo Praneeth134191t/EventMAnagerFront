@@ -1,3 +1,8 @@
+<style type="text/css">
+	    .frm-err{
+    	color: red;	
+    }
+</style>
 <form novalidate
       (ngSubmit)="loginSubmit()"
       #loginForm="ngForm">
@@ -15,7 +20,7 @@
 		       required
 		       pattern="[^ @]*@[^ @]*"
 		       #email="ngModel">
-		<div class="form-control-feedback"
+		<div class="frm-err"
 		     *ngIf="email.errors && (email.dirty || email.touched)">
 			<p *ngIf="email.errors.required">Email is required</p>
 			<p *ngIf="email.errors.pattern">Email must contain at least the @ character</p>
@@ -36,7 +41,7 @@
 		       required
 		       minlength="8"
 		       #password="ngModel">
-		<div class="form-control-feedback"
+		<div class="frm-err"
 		     *ngIf="password.errors && (password.dirty || password.touched)">
 			<p *ngIf="password.errors.required">Password is required</p>
 			<p *ngIf="password.errors.minlength">Password must be at least 8 characters long</p>

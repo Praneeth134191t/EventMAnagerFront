@@ -1,8 +1,19 @@
-<div class="row" *ngIf="photoData !== null"> 
+<style type="text/css">
+	.center_3 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+    height: : 75%;
+     
+  }
+</style>
+
+<div class="row center_3" *ngIf="photoData !== null"> 
       <a href="#" class="d-block mb-4 h-100">
-            <img class="responsive" src="{{photoData?.url}}" alt="">
+            <img class="responsive center_3" src="{{photoData?.url}}" alt="">
           </a>
-       </div>
+   </div>
 <form novalidate
       (ngSubmit)="descriptionSubmit()"
       #descriptionForm="ngForm">

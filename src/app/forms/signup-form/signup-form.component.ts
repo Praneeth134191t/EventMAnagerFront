@@ -1,14 +1,15 @@
-import { Component, OnInit,NgModule,ViewChild,Input } from '@angular/core';
+import { Component, OnInit,NgModule,ViewChild,Input,EventEmitter,Output } from '@angular/core';
 import { AuthService } from '../../auth/auth.service';
 import { ModalComponent } from '../../modal/modal.component';
-import {ModalServiceService} from '../../shared/modal-service.service';
-
+import {CookieService} from 'ng2-cookies';
 
 class Signup {
-  constructor(public firstName: string = '',
+  constructor(public id : number= 0,
+              public name: string = '',
               public lastName: string = '',
               public email: string = '',
-              public password: string = '') {
+              public password: string = '',
+              public password_confirmation: string= '') {
   }
 }
 @Component({
@@ -18,12 +19,15 @@ class Signup {
 })
 export class SignupFormComponent{
 
-  constructor(private authService:AuthService,private clsmodal:ModalServiceService) { }
+  constructor(private authService:AuthService) {
+    this.x="hello";
+   }
   user : Signup;
   model: Signup = new Signup();
   @ViewChild('signUpForm') form: any;
   @Input() modal :ModalComponent;
-
+  @Output() signUpCloseEvent = new EventEmitter();
+  x:String;
 
   onSubmit() {
     if (this.form.valid) {
@@ -37,18 +41,14 @@ export class SignupFormComponent{
                                     console.log(err);
                                 });
       this.form.reset();
-      this.clsmodal.closeModal.emit(false);
+      this.signUpCloseEvent.emit(null);
     }
     
   }
-  // submitForm(){
-  //   this.dataService.postSignUp()
-  //                          .subscribe(
-  //                              user => this.user = user, //Bind to view
-  //                               err => {
-  //                                   // Log errors if any
-  //                                   console.log(err);
-  //                               });
-  // }
+  test(){
+    this.model.name="sdada";
+    this.x="bye";
+    console.log(this.model);
+  }
 
 }

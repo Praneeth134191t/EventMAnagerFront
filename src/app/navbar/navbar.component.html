@@ -2,24 +2,30 @@
   <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="#">Flickr Image Store</a>
   <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
     <ul class="navbar-nav">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      <li *ngIf="cookieObj && cookieObj.hasOwnProperty('token')" class="nav-item active">
+        <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Features</a>
+      <li *ngIf="cookieObj && cookieObj.hasOwnProperty('token')" class="nav-item">
+        <a class="nav-link" href="/fav_images">Favorite</a>
       </li>
-      <li class="nav-item">
+      <li *ngIf="cookieObj && !cookieObj.hasOwnProperty('token')" class="nav-item">
         <a class="nav-link" href="#" (click)="showLogin = !showLogin">Login</a>
       </li>
-      <li class="nav-item">
+      <li *ngIf="cookieObj && !cookieObj.hasOwnProperty('token')" class="nav-item">
         <a class="nav-link" href="#" (click)="showSignUp= !showSignUp">SignUp</a>
+      </li>
+      <li *ngIf="cookieObj && cookieObj.hasOwnProperty('token')" class="nav-item">
+        <a class="nav-link" href="#" (click)="logout()">Logout</a>
       </li>
     </ul>
   </div>
 </nav>
-<app-modal [(visible)]="showSignUp">
-<app-signup-form></app-signup-form>
+<app-modal [(visible)]="showSignUp" #sign_up_app_modal>
+<app-signup-form (signUpCloseEvent)="sign_up_app_modal.close()"></app-signup-form>
+</app-modal>
+<app-modal [(visible)]="showLogin" #login_app_modal>
+<app-login-form  (loginCloseEvent)="login_app_modal.close()" (loginSuccessEvent)="logSuccess()"></app-login-form>
 </app-modal>

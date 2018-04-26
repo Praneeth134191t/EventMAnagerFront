@@ -5,37 +5,19 @@
 	<fieldset ngModelGroup="name">
 		<div class="form-group"
 		     [ngClass]="{
-        'has-danger': firstName.invalid && (firstName.dirty || firstName.touched),
-        'has-success': firstName.valid && (firstName.dirty || firstName.touched)
+        'has-danger': name.invalid && (name.dirty || name.touched),
+        'has-success': name.valid && (name.dirty || name.touched)
    }">
-			<label>First Name</label>
+			<label>Name</label>
 			<input type="text"
 			       class="form-control"
-			       name="firstName"
-			       [(ngModel)]="model.firstName"
+			       name="name"
+			       [(ngModel)]="model.name"
 			       required
-			       #firstName="ngModel">
+			       #name="ngModel">
 			<div class="form-control-feedback"
-			     *ngIf="firstName.errors && (firstName.dirty || firstName.touched)">
-				<p *ngIf="firstName.errors.required">First name is required</p>
-			</div>
-		</div>
-
-		<div class="form-group"
-		     [ngClass]="{
-        'has-danger': lastName.invalid && (lastName.dirty || lastName.touched),
-        'has-success': lastName.valid && (lastName.dirty || lastName.touched)
-   }">
-			<label>Last Name</label>
-			<input type="text"
-			       class="form-control"
-			       name="lastName"
-			       [(ngModel)]="model.lastName"
-			       required
-			       #lastName="ngModel">
-			<div class="form-control-feedback"
-			     *ngIf="lastName.errors && (lastName.dirty || lastName.touched)">
-				<p *ngIf="lastName.errors.required">Last name is required</p>
+			     *ngIf="name.errors && (name.dirty || name.touched)">
+				<p *ngIf="name.errors.required">Name is required</p>
 			</div>
 		</div>
 	</fieldset>
@@ -81,9 +63,28 @@
 			<p *ngIf="password.errors.minlength">Password must be at least 8 characters long</p>
 		</div>
 	</div>
-
+		<div class="form-group"
+	     [ngClass]="{
+        'has-danger': password_confirmation.invalid && (password_confirmation.dirty || password_confirmation.touched),
+        'has-success': password_confirmation.valid && (password_confirmation.dirty || password_confirmation.touched)
+  }">
+		<label>Password confirmation</label>
+		<input type="password"
+		       class="form-control"
+		       name="password_confirmation"
+		       [(ngModel)]="model.password_confirmation"
+		       required
+		       minlength="8"
+		       #password_confirmation="ngModel">
+		<div class="form-control-feedback"
+		     *ngIf="password_confirmation.errors && (password_confirmation.dirty || password_confirmation.touched)">
+			<p *ngIf="password_confirmation.errors.required">Password is required</p>
+			<p *ngIf="password_confirmation.errors.minlength">Password must be at least 8 characters long</p>
+		</div>
+	</div>
 	<button type="submit"
 	        class="btn btn-primary"
-	        [disabled]="signUpForm.invalid">Submit
+	        [class.disabled]="isClickedOnce"
+   (click)="isClickedOnce = true">Submit
 	</button>
 </form>
